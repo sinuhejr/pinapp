@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de PIN</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div>
+        <h2>Generador de PIN</h2>
+
+        <label for="pinType">Tipo de PIN:</label>
+        <select id="pinType">
+            <option value="salida">Salida</option>
+            <option value="regreso">Regreso</option>
+        </select>
+
+        <label for="date">Fecha:</label>
+        <input type="text" id="date" readonly />
+
+        <label for="time">Hora (QTR):</label>
+        <input type="text" id="time" readonly />
+
+        <h3>Personas:</h3>
+        <div id="names">
+            <input type="checkbox" id="name1" value="Comisario Oropeza Cruz Fredy">
+            <label for="name1">Comisario Oropeza Cruz Fredy</label><br>
+            <input type="checkbox" id="name2" value="Subinspector Rivero Bautista Ricardo">
+            <label for="name2">Subinspector Rivero Bautista Ricardo</label><br>
+            <input type="checkbox" id="name3" value="Suboficial Jiménez Rivera Sinuhé">
+            <label for="name3">Suboficial Jiménez Rivera Sinuhé</label><br>
+            <input type="checkbox" id="name4" value="Suboficial Sandoval Vázquez Alondra">
+            <label for="name4">Suboficial Sandoval Vázquez Alondra</label><br>
+            <input type="checkbox" id="name5" value="Suboficial Vega Cardona Juan David">
+            <label for="name5">Suboficial Vega Cardona Juan David</label><br>
+            <input type="checkbox" id="name6" value="Suboficial García Alemán Celeste">
+            <label for="name6">Suboficial García Alemán Celeste</label><br>
+        </div>
+
+        <h3>Selecciona los Vehículos:</h3>
+        <div id="vehicles">
+            <input type="checkbox" id="vehicle1" value="Explorer AG051A3">
+            <label for="vehicle1">Explorer AG051A3</label><br>
+            <input type="checkbox" id="vehicle2" value="Charger AG843A2">
+            <label for="vehicle2">Charger AG843A2</label><br>
+            <input type="checkbox" id="vehicle3" value="Charger AG845A2">
+            <label for="vehicle3">Charger AG845A2</label><br>
+            <input type="checkbox" id="vehicle4" value="Charger AG866A2">
+            <label for="vehicle4">Charger AG866A2</label><br>
+            <input type="checkbox" id="vehicle5" value="Charger AG898A2">
+            <label for="vehicle5">Charger AG898A2</label><br>
+            <input type="checkbox" id="vehicle6" value="Versa AG340A2">
+            <label for="vehicle6">Versa AG340A2</label><br>
+            <input type="checkbox" id="vehicle7" value="Hummer AG398A3">
+            <label for="vehicle7">Hummer AG398A3</label><br>
+            <input type="checkbox" id="vehicle8" value="Jeep AAA531A">
+            <label for="vehicle8">Jeep AAA531A</label><br>
+        </div>
+
+        <h3>Selecciona los Lugares:</h3>
+        <div id="places">
+            <input type="checkbox" id="place1" value="a abastecer combustible">
+            <label for="place1">a abastecer combustible</label><br>
+            <input type="checkbox" id="place2" value="a por alimentos por personal en turno">
+            <label for="place2">a por alimentos por personal en turno</label><br>
+            <input type="checkbox" id="place3" value="a realizar tomas con el dron">
+            <label for="place3">a realizar tomas con el dron</label><br>
+            <input type="checkbox" id="place4" value="a realizar entrevista en campo">
+            <label for="place4">a realizar entrevista en campo</label><br>
+            <input type="checkbox" id="place5" value="a comisión">
+            <label for="place5">a comisión</label><br>
+            <input type="checkbox" id="place6" value="a realizar investigación en campo">
+            <label for="place6">a realizar investigación en campo</label><br>
+        </div>
+
+        <h3>Selecciona el Suboficial que Firma:</h3>
+        <select id="signingOfficer">
+            <option value="Comisario Oropeza Cruz Fredy">Comisario Oropeza Cruz Fredy</option>
+            <option value="Subinspector Rivero Bautista Ricardo">Subinspector Rivero Bautista Ricardo</option>
+            <option value="Suboficial Jiménez Rivera Sinuhé">Suboficial Jiménez Rivera Sinuhé</option>
+            <option value="Suboficial Sandoval Vázquez Alondra">Suboficial Sandoval Vázquez Alondra</option>
+            <option value="Suboficial Vega Cardona Juan David">Suboficial Vega Cardona Juan David</option>
+            <option value="Suboficial García Alemán Celeste">Suboficial García Alemán Celeste</option>
+        </select>
+
+        <button id="generatePinButton">Generar PIN</button>
+        <button id="copyPinButton">Copiar PIN</button>
+
+        <h3>PIN Generado:</h3>
+        <pre id="pinOutput"></pre>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
