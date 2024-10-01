@@ -8,7 +8,7 @@
 </head>
 <body>
     <div>
-        <h2>Generador de PIN, Versión 1.2</h2>
+        <h2>Generador de PIN</h2>
 
         <label for="pinType">Tipo de PIN:</label>
         <select id="pinType">
@@ -62,8 +62,8 @@
         <div id="places">
             <input type="checkbox" id="place1" value="a abastecer combustible">
             <label for="place1">a abastecer combustible</label><br>
-            <input type="checkbox" id="place2" value="por alimentos por personal en turno">
-            <label for="place2">por alimentos por personal en turno</label><br>
+            <input type="checkbox" id="place2" value="a por alimentos por personal en turno">
+            <label for="place2">a por alimentos por personal en turno</label><br>
             <input type="checkbox" id="place3" value="a realizar tomas con el dron">
             <label for="place3">a realizar tomas con el dron</label><br>
             <input type="checkbox" id="place4" value="a realizar entrevista en campo">
@@ -72,11 +72,18 @@
             <label for="place5">a comisión</label><br>
             <input type="checkbox" id="place6" value="a realizar investigación en campo">
             <label for="place6">a realizar investigación en campo</label><br>
-            <input type="checkbox" id="place7" value="a la Fiscalía General de Aguascalientes a entregar documentación">
-            <label for="place7">a la Fiscalía General de Aguascalientes a entregar documentación</label><br>
         </div>
 
-        <!-- Botones -->
+        <h3>Selecciona el Suboficial que Firma:</h3>
+        <select id="signingOfficer">
+            <option value="Comisario Oropeza Cruz Fredy">Comisario Oropeza Cruz Fredy</option>
+            <option value="Subinspector Rivero Bautista Ricardo">Subinspector Rivero Bautista Ricardo</option>
+            <option value="Suboficial Jiménez Rivera Sinuhé">Suboficial Jiménez Rivera Sinuhé</option>
+            <option value="Suboficial Sandoval Vázquez Alondra">Suboficial Sandoval Vázquez Alondra</option>
+            <option value="Suboficial Vega Cardona Juan David">Suboficial Vega Cardona Juan David</option>
+            <option value="Suboficial García Alemán Celeste">Suboficial García Alemán Celeste</option>
+        </select>
+
         <button id="generatePinButton">Generar PIN</button>
         <button id="copyPinButton">Copiar PIN</button>
 
@@ -84,11 +91,6 @@
         <pre id="pinOutput"></pre>
     </div>
 
-    <footer style="margin-top: 20px; text-align: center;">
-        <small>Desarrollado por Maverick y su copyright profesional</small>
-    </footer>
-
-    <!-- Asegúrate de que el archivo JavaScript esté bien referenciado -->
     <script src="script.js"></script>
 </body>
 </html>
