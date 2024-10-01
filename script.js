@@ -117,20 +117,3 @@ ${signingOfficer}`;
     document.getElementById('pinOutput').textContent = pinText;
 });
 
-// Función para copiar el PIN generado al portapapeles
-document.getElementById('copyPinButton').addEventListener('click', function() {
-    var pinText = document.getElementById('pinOutput').textContent || document.getElementById('pinOutput').innerText;
-
-    // Verifica si hay contenido para copiar
-    if (pinText) {
-        // Utiliza la API de portapapeles para copiar el contenido
-        navigator.clipboard.writeText(pinText).then(function() {
-            alert('PIN copiado al portapapeles.');
-        }).catch(function(error) {
-            console.error('Error al copiar el PIN: ', error);
-        });
-    } else {
-        alert('No hay ningún PIN generado para copiar.');
-    }
-});
-
