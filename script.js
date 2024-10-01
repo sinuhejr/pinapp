@@ -133,4 +133,3 @@ document.getElementById('copyPinButton').addEventListener('click', function() {
         alert('No hay ningún PIN generado para copiar.');
     }
 });
-
