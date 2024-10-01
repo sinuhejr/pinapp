@@ -20,7 +20,7 @@ updateDateTime();
 // Actualizar la fecha y hora automáticamente cada minuto
 setInterval(updateDateTime, 60000);
 
-// Esta función se ejecuta cuando se hace clic en el botón "Generar PIN"
+// Función para generar el PIN cuando se hace clic en el botón
 document.getElementById('generatePinButton').addEventListener('click', function() {
     var pinType = document.getElementById('pinType').value;
     var date = document.getElementById('date').value;
@@ -30,36 +30,32 @@ document.getElementById('generatePinButton').addEventListener('click', function(
     var selectedVehicles = Array.from(document.querySelectorAll('#vehicles input:checked')).map(checkbox => checkbox.value);
     var selectedPlaces = Array.from(document.querySelectorAll('#places input:checked')).map(checkbox => checkbox.value);
 
-    // Verificamos que haya personas seleccionadas
+    // Verificación: Asegúrate de que al menos una persona está seleccionada
     if (selectedNames.length === 0) {
         alert('Por favor selecciona al menos una persona.');
         return;
     }
 
-    // Verificamos que haya lugares seleccionados
+    // Verificación: Asegúrate de que al menos un lugar está seleccionado
     if (selectedPlaces.length === 0) {
         alert('Por favor selecciona al menos un lugar.');
         return;
     }
 
-    var namesIntro = selectedNames.join(', ');
+    // Si no se seleccionaron vehículos, no mostramos el bloque de vehículos
+    var vehiclesText = selectedVehicles.length > 0 ? selectedVehicles.map(vehicle => `•${vehicle}`).join('\n') : 'Sin vehículo asignado.';
 
-    // Verificamos si el lugar ya comienza con "a" para evitar duplicar
     var placesText = selectedPlaces.join(', ');
-    if (!placesText.startsWith('a ')) {
-        placesText = 'a ' + placesText;
-    }
 
-    var vehiclesText = selectedVehicles.map(vehicle => `•${vehicle}`).join('\n');
-
-    // Determinamos si es "quien" o "quienes" y si es "dirige" o "dirigió"
+    // Determinamos si es "quien" o "quienes" y si es "dirige" o "dirigió" dependiendo del tipo de PIN
     var actionText = selectedNames.length === 1
         ? (pinType === 'salida' ? 'quien se dirige' : 'quien se dirigió')
         : (pinType === 'salida' ? 'quienes se dirigen' : 'quienes se dirigieron');
 
-    var pinText = `*SECRETARÍA DE SEGURIDAD PÚBLICA*\n*DIRECCIÓN GENERAL DE POLICÍA CIBERNÉTICA*\n*AGUASCALIENTES, AGS.*\n\n*Fecha*\n${date}\n\n*QTR*\n${time}\n\nPara conocimiento de la superioridad, por medio del presente me permito informar ${pinType === 'salida' ? 'la salida' : 'el regreso'} de ${namesIntro}, ${actionText} ${placesText}.\n\n*Vehículos*\n${vehiclesText}\n\n*Respetuosamente*\nSuboficial Jiménez Rivera Sinuhé`;
+    // Texto final del PIN
+    var pinText = `*SECRETARÍA DE SEGURIDAD PÚBLICA*\n*DIRECCIÓN GENERAL DE POLICÍA CIBERNÉTICA*\n*AGUASCALIENTES, AGS.*\n\n*Fecha*\n${date}\n\n*QTR*\n${time}\n\nPara conocimiento de la superioridad, por medio del presente me permito informar ${pinType === 'salida' ? 'la salida' : 'el regreso'} de ${selectedNames.join(', ')}, ${actionText} a ${placesText}.\n\n*Vehículos*\n${vehiclesText}\n\n*Respetuosamente*\nSuboficial Jiménez Rivera Sinuhé`;
 
-    // Aquí se actualiza el contenido del elemento 'pinOutput' con el texto del PIN generado
+    // Actualizar el contenido del elemento 'pinOutput' con el PIN generado
     document.getElementById('pinOutput').textContent = pinText;
 });
 
