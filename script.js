@@ -117,3 +117,14 @@ ${signingOfficer}`;
     document.getElementById('pinOutput').textContent = pinText;
 });
 
+// Función para copiar el PIN al portapapeles
+document.getElementById('copyPinButton').addEventListener('click', function() {
+    var pinText = document.getElementById('pinOutput').textContent;
+
+    navigator.clipboard.writeText(pinText).then(function() {
+        alert('El PIN ha sido copiado al portapapeles');
+    }).catch(function(err) {
+        alert('Error al copiar el PIN: ', err);
+    });
+});
+
