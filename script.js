@@ -55,25 +55,28 @@ function formatNames(names) {
         oficialText = `de los Oficiales ${oficiales.slice(0, -1).join(', ')} y ${oficiales[oficiales.length - 1]}`;
     }
 
-    let suboficialesText = '';
-    if (suboficiales.length > 0) {
-        const suboficialNames = suboficiales.map(name => name.replace('Suboficial ', ''));
-        const isOnlyWomen = suboficialNames.every(name => ['Alondra Sandoval Vázquez', 'Celeste García Alemán'].includes(name));
-        const hasMale = suboficialNames.some(name => !['Alondra Sandoval Vázquez', 'Celeste García Alemán'].includes(name));
+   let suboficialesText = '';
+if (suboficiales.length > 0) {
+    const suboficialNames = suboficiales.map(name => name.replace('Suboficial ', ''));
+    const isOnlyWomen = suboficialNames.every(name => ['Alondra Sandoval Vázquez', 'Celeste García Alemán'].includes(name));
+    const hasMale = suboficialNames.some(name => !['Alondra Sandoval Vázquez', 'Celeste García Alemán'].includes(name));
 
-        if (isOnlyWomen) {
-            // Caso de solo mujeres (Alondra y Celeste)
-            suboficialesText = `de las Suboficiales ${suboficialNames.join(' y ')}`;
-        } else if (hasMale) {
-            // Caso de mezcla de hombres y mujeres (o solo hombres)
-            const prefix = suboficialNames.length === 1 ? 'de la Suboficial' : 'de los Suboficiales'; // Se ajusta el prefijo para un solo suboficial
-            const formattedNames = suboficialNames.length > 2
-                ? `${suboficialNames.slice(0, -1).join(', ')} y ${suboficialNames[suboficialNames.length - 1]}`
-                : suboficialNames.join(' y ');
+    if (isOnlyWomen) {
+        // Caso de solo mujeres (Alondra y Celeste)
+        suboficialesText = `de las Suboficiales ${suboficialNames.join(' y ')}`;
+    } else if (hasMale) {
+        // Caso de mezcla de hombres y mujeres (o solo hombres)
+        const prefix = suboficialNames.length === 1 
+            ? 'de la Suboficial' 
+            : 'de los Suboficiales'; // Ajustar a 'los' si hay más de un suboficial
+        const formattedNames = suboficialNames.length > 2
+            ? `${suboficialNames.slice(0, -1).join(', ')} y ${suboficialNames[suboficialNames.length - 1]}`
+            : suboficialNames.join(' y ');
 
-            suboficialesText = `${prefix} ${formattedNames}`;
-        }
+        suboficialesText = `${prefix} ${formattedNames}`;
     }
+}
+
 
     let combinedText = [];
     if (comisarios.length > 0) combinedText.push(comisarioText);
