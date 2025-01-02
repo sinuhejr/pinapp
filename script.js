@@ -55,36 +55,39 @@ function formatNames(names) {
         oficialText = `de los Oficiales ${oficiales.slice(0, -1).join(', ')} y ${oficiales[oficiales.length - 1]}`;
     }
 
-   let suboficialesText = '';
-if (suboficiales.length > 0) {
-    const suboficialNames = suboficiales.map(name => name.replace('Suboficial ', ''));
-    const isOnlyWomen = suboficialNames.every(name => ['Alondra Sandoval Vázquez', 'Celeste García Alemán'].includes(name));
-    const hasMale = suboficialNames.some(name => !['Alondra Sandoval Vázquez', 'Celeste García Alemán'].includes(name));
+    let suboficialesTextFinal = '';
 
-    if (isOnlyWomen) {
-        // Caso de solo mujeres (Alondra y Celeste)
-        suboficialesText = `de las Suboficiales ${suboficialNames.join(' y ')}`;
-    } else if (hasMale) {
-        // Caso de mezcla de hombres y mujeres (o solo hombres)
-        const prefix = suboficialNames.length === 1 
-            ? 'de la Suboficial' 
-            : 'de los Suboficiales'; // Ajustar a 'los' si hay más de un suboficial
-        const formattedNames = suboficialNames.length > 2
-            ? `${suboficialNames.slice(0, -1).join(', ')} y ${suboficialNames[suboficialNames.length - 1]}`
-            : suboficialNames.join(' y ');
+    if (suboficiales.length > 0) {
+        const suboficialNames = suboficiales.map(name => name.replace('Suboficial ', ''));
+        
+        // Caso especial: Si solo se selecciona "David", cambiar a "el Suboficial"
+        if (suboficialNames.length === 1 && suboficialNames[0] === 'Vega Cardona Juan David') {
+            suboficialesTextFinal = `del Suboficial ${suboficialNames[0]}`;
+        } else {
+            const isOnlyWomen = suboficialNames.every(name => ['Alondra Sandoval Vázquez', 'Celeste García Alemán'].includes(name));
+            const hasMale = suboficialNames.some(name => !['Alondra Sandoval Vázquez', 'Celeste García Alemán'].includes(name));
 
-        suboficialesText = `${prefix} ${formattedNames}`;
+            if (isOnlyWomen) {
+                suboficialesTextFinal = `de las Suboficiales ${suboficialNames.join(' y ')}`;
+            } else if (hasMale) {
+                const prefix = suboficialNames.length === 1 
+                    ? 'de la Suboficial' 
+                    : 'de los Suboficiales';
+                const formattedNames = suboficialNames.length > 2
+                    ? `${suboficialNames.slice(0, -1).join(', ')} y ${suboficialNames[suboficialNames.length - 1]}`
+                    : suboficialNames.join(' y ');
+
+                suboficialesTextFinal = `${prefix} ${formattedNames}`;
+            }
+        }
     }
-}
-
 
     let combinedText = [];
     if (comisarios.length > 0) combinedText.push(comisarioText);
     if (subinspectores.length > 0) combinedText.push(subinspectorText);
     if (oficiales.length > 0) combinedText.push(oficialText);
-    if (suboficiales.length > 0) combinedText.push(suboficialesText);
+    if (suboficiales.length > 0) combinedText.push(suboficialesTextFinal);
 
-    // Generar el texto combinado con la coma antes del "y"
     if (combinedText.length > 1) {
         const last = combinedText.pop();
         return `${combinedText.join(', ')} y ${last}`;
