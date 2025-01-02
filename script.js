@@ -1,14 +1,14 @@
 // Función para actualizar la fecha y hora automáticamente cada minuto
 function updateDateTime() {
-    var now = new Date();
-    var day = String(now.getDate()).padStart(2, '0');
-    var month = String(now.getMonth() + 1).padStart(2, '0'); // Enero es 0
-    var year = now.getFullYear();
-    var hours = String(now.getHours()).padStart(2, '0');
-    var minutes = String(now.getMinutes()).padStart(2, '0');
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Enero es 0
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
 
-    var formattedDate = `${day}/${month}/${year}`;
-    var formattedTime = `${hours}:${minutes} horas`;
+    const formattedDate = `${day}/${month}/${year}`;
+    const formattedTime = `${hours}:${minutes} horas`;
 
     document.getElementById('date').value = formattedDate;
     document.getElementById('time').value = formattedTime;
@@ -31,12 +31,12 @@ function getGreeting(hour) {
     }
 }
 
-// Esta función maneja la redacción de los nombres dependiendo del rango
 function formatNames(names) {
     const comisarios = names.filter(name => name.startsWith('Comisario'));
-    const subinspectores = names.filter(name => name.startsWith('Subinspector')); // Incluimos subinspectores
+    const subinspectores = names.filter(name => name.startsWith('Subinspector'));
+    const oficiales = names.filter(name => name.startsWith('Oficial'));
     const suboficiales = names.filter(name => name.startsWith('Suboficial'));
-    
+
     let comisarioText = comisarios.length === 1
         ? `del ${comisarios[0]}`
         : `de los ${comisarios.join(', ')}`;
@@ -45,56 +45,86 @@ function formatNames(names) {
     if (subinspectores.length === 1) {
         subinspectorText = `del ${subinspectores[0]}`;
     } else if (subinspectores.length > 1) {
-        subinspectorText = `de los Subinspectores ${subinspectores.join(', ').replace(/,([^,]*)$/, ' y$1')}`;
+        subinspectorText = `de los Subinspectores ${subinspectores.join(', ')}`;
+    }
+
+    let oficialText = '';
+    if (oficiales.length === 1) {
+        oficialText = `del ${oficiales[0]}`;
+    } else if (oficiales.length > 1) {
+        oficialText = `de los Oficiales ${oficiales.slice(0, -1).join(', ')} y ${oficiales[oficiales.length - 1]}`;
     }
 
     let suboficialesText = '';
-    if (suboficiales.length === 1) {
-        suboficialesText = `del ${suboficiales[0]}`;
-    } else if (suboficiales.length > 1) {
+    if (suboficiales.length > 0) {
         const suboficialNames = suboficiales.map(name => name.replace('Suboficial ', ''));
-        suboficialesText = `de los Suboficiales ${suboficialNames.join(', ').replace(/,([^,]*)$/, ' y$1')}`;
+        const isOnlyWomen = suboficialNames.every(name => ['Alondra Sandoval Vázquez', 'Celeste García Alemán'].includes(name));
+        const hasMale = suboficialNames.some(name => !['Alondra Sandoval Vázquez', 'Celeste García Alemán'].includes(name));
+
+        if (isOnlyWomen) {
+            // Caso de solo mujeres (Alondra y Celeste)
+            suboficialesText = `de las Suboficiales ${suboficialNames.join(' y ')}`;
+        } else if (hasMale) {
+            // Caso de mezcla de hombres y mujeres (o solo hombres)
+            const prefix = hasMale ? 'de los Suboficiales' : 'de las Suboficiales';
+            const formattedNames = suboficialNames.length > 2
+                ? `${suboficialNames.slice(0, -1).join(', ')} y ${suboficialNames[suboficialNames.length - 1]}`
+                : suboficialNames.join(' y ');
+
+            suboficialesText = `${prefix} ${formattedNames}`;
+        }
     }
 
-    let combinedText = '';
-    if (comisarios.length > 0) combinedText += comisarioText;
-    if (subinspectores.length > 0) combinedText += (combinedText ? ' y ' : '') + subinspectorText;
-    if (suboficiales.length > 0) combinedText += (combinedText ? ' y ' : '') + suboficialesText;
+    let combinedText = [];
+    if (comisarios.length > 0) combinedText.push(comisarioText);
+    if (subinspectores.length > 0) combinedText.push(subinspectorText);
+    if (oficiales.length > 0) combinedText.push(oficialText);
+    if (suboficiales.length > 0) combinedText.push(suboficialesText);
 
-    return combinedText;
+    // Generar el texto combinado con la coma antes del "y"
+    if (combinedText.length > 1) {
+        const last = combinedText.pop();
+        return `${combinedText.join(', ')} y ${last}`;
+    }
+    return combinedText.join(', ');
 }
 
-// Esta función se ejecuta cuando se hace clic en el botón "Generar PIN"
 document.getElementById('generatePinButton').addEventListener('click', function() {
-    var pinType = document.getElementById('pinType').value;
-    var date = document.getElementById('date').value;
-    var time = document.getElementById('time').value;
+    const pinType = document.getElementById('pinType').value;
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
 
-    var selectedNames = Array.from(document.querySelectorAll('#names input:checked')).map(checkbox => checkbox.value);
-    var selectedVehicles = Array.from(document.querySelectorAll('#vehicles input:checked')).map(checkbox => checkbox.value);
-    var selectedPlaces = Array.from(document.querySelectorAll('#places input:checked')).map(checkbox => checkbox.value);
-    var signingOfficer = document.getElementById('signingOfficer').value;
+    const selectedNames = Array.from(document.querySelectorAll('#names input:checked')).map(checkbox => checkbox.value);
+    const selectedVehicles = Array.from(document.querySelectorAll('#vehicles input:checked')).map(checkbox => checkbox.value);
+    const selectedPlaces = Array.from(document.querySelectorAll('#places input:checked')).map(checkbox => checkbox.value);
+    const signingOfficer = document.getElementById('signingOfficer').value;
 
-    var namesIntro = formatNames(selectedNames);
-    
+    // Obtener el valor del campo "Otro(a):"
+    const otherPlace = document.getElementById('otroLugar').value.trim();
+    if (otherPlace) {
+        selectedPlaces.push(otherPlace);  // Si hay un lugar adicional, lo agregamos
+    }
+
+    const namesIntro = formatNames(selectedNames);
+
     // Verificamos si el lugar ya comienza con "a" para evitar duplicar
-    var placesText = selectedPlaces.join(', ');
+    let placesText = selectedPlaces.join(', ');
     if (!placesText.startsWith('a ')) {
         placesText = 'a ' + placesText;
     }
 
-    var vehiclesText = selectedVehicles.map(vehicle => `•${vehicle}`).join('\n');
+    const vehiclesText = selectedVehicles.map(vehicle => `•${vehicle}`).join('\n');
 
-    var now = new Date();
-    var hour = now.getHours();
-    var greeting = getGreeting(hour);
+    const now = new Date();
+    const hour = now.getHours();
+    const greeting = getGreeting(hour);
 
     // Lógica para determinar si es "quien se dirige" o "quienes se dirigen" para "salida"
-    var actionText = selectedNames.length === 1 
+    const actionText = selectedNames.length === 1 
         ? (pinType === 'salida' ? 'quien se dirige' : 'quien se dirigió') 
         : (pinType === 'salida' ? 'quienes se dirigen' : 'quienes se dirigieron');
 
-    var pinText = `*SECRETARÍA DE SEGURIDAD PÚBLICA*
+    const pinText = `*SECRETARÍA DE SEGURIDAD PÚBLICA*
 *DIRECCIÓN GENERAL DE POLICÍA CIBERNÉTICA*
 *AGUASCALIENTES, AGS.*
 
@@ -119,7 +149,7 @@ ${signingOfficer}`;
 
 // Función para copiar el PIN al portapapeles
 document.getElementById('copyPinButton').addEventListener('click', function() {
-    var pinText = document.getElementById('pinOutput').textContent;
+    const pinText = document.getElementById('pinOutput').textContent;
 
     navigator.clipboard.writeText(pinText).then(function() {
         alert('El PIN ha sido copiado al portapapeles');
