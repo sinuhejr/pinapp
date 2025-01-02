@@ -66,7 +66,7 @@ function formatNames(names) {
             suboficialesText = `de las Suboficiales ${suboficialNames.join(' y ')}`;
         } else if (hasMale) {
             // Caso de mezcla de hombres y mujeres (o solo hombres)
-            const prefix = hasMale ? 'de los Suboficiales' : 'de las Suboficiales';
+            const prefix = suboficialNames.length === 1 ? 'de la Suboficial' : 'de los Suboficiales'; // Se ajusta el prefijo para un solo suboficial
             const formattedNames = suboficialNames.length > 2
                 ? `${suboficialNames.slice(0, -1).join(', ')} y ${suboficialNames[suboficialNames.length - 1]}`
                 : suboficialNames.join(' y ');
