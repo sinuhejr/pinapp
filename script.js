@@ -157,4 +157,3 @@ document.getElementById('copyPinButton').addEventListener('click', function() {
         alert('Error al copiar el PIN: ', err);
     });
 });
-
