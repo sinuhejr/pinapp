@@ -68,7 +68,9 @@ function formatNames(names) {
     ['Sandoval Vázquez Alondra', 'García Alemán Celeste', 'Sánchez Ruiz Wendy Noemí'].includes(name)
 );
 
-            const hasMale = suboficialNames.some(name => !['Alondra Sandoval Vázquez', 'Celeste García Alemán', 'Wendy Noemí Sánchez Ruiz'].includes(name));
+const hasMale = suboficialNames.some(name =>
+    !['Sandoval Vázquez Alondra', 'García Alemán Celeste', 'Sánchez Ruiz Wendy Noemí'].includes(name)
+);
 
             if (isOnlyWomen) {
                 suboficialesTextFinal = `de las Suboficiales ${suboficialNames.join(' y ')}`;
