@@ -64,7 +64,10 @@ function formatNames(names) {
         if (suboficialNames.length === 1 && suboficialNames[0] === 'Vega Cardona Juan David') {
             suboficialesTextFinal = `del Suboficial ${suboficialNames[0]}`;
         } else {
-            const isOnlyWomen = suboficialNames.every(name => ['Alondra Sandoval Vázquez', 'Celeste García Alemán', 'Wendy Noemí Sánchez Ruiz'].includes(name));
+            const isOnlyWomen = suboficialNames.every(name =>
+    ['Sandoval Vázquez Alondra', 'García Alemán Celeste', 'Sánchez Ruiz Wendy Noemí'].includes(name)
+);
+
             const hasMale = suboficialNames.some(name => !['Alondra Sandoval Vázquez', 'Celeste García Alemán', 'Wendy Noemí Sánchez Ruiz'].includes(name));
 
             if (isOnlyWomen) {
