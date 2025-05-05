@@ -36,6 +36,7 @@ function formatNames(names) {
     const subinspectores = names.filter(name => name.startsWith('Subinspector'));
     const oficiales = names.filter(name => name.startsWith('Oficial'));
     const suboficiales = names.filter(name => name.startsWith('Suboficial'));
+    const policias = names.filter(name => name.startsWith('Policía')); // ← Agregado
 
     let comisarioText = comisarios.length === 1
         ? `del ${comisarios[0]}`
@@ -85,6 +86,15 @@ const hasMale = suboficialNames.some(name =>
                 suboficialesTextFinal = `${prefix} ${formattedNames}`;
             }
         }
+     // 👇 NUEVO bloque para policías
+    let policiaText = '';
+    if (policias.length === 1) {
+        policiaText = `del ${policias[0]}`;
+    } else if (policias.length > 1) {
+        const formatted = policias.length > 2
+            ? `${policias.slice(0, -1).join(', ')} y ${policias[policias.length - 1]}`
+            : policias.join(' y ');
+        policiaText = `de los Policías ${formatted}`;
     }
 
     let combinedText = [];
